@@ -1,5 +1,6 @@
 from transacoes import (
-    adicionar_transacao, listar_transacoes, deletar_transacao, buscar_transacao_por_id, atualizar_transacao)
+    adicionar_transacao, listar_transacoes, deletar_transacao, 
+    buscar_transacao_por_id, atualizar_transacao, resumo_financeiro)
 from validacoes import validar_data, validar_tipo, validar_valor
 
 def exibir_menu():
@@ -8,11 +9,11 @@ def exibir_menu():
         print('           CONTROLE FINANCEIRO           ')
         print('=========================================')
         
-        input_usuario = input('1 - Adicionar transação \n2 - Listar transações \n3 - Atualizar transação \n4 - Deletar transação \n0 - Sair \n')
+        input_usuario = input('1 - Adicionar transação \n2 - Listar transações \n3 - Atualizar transação \n4 - Deletar transação\n5 - Resumo Financeiro \n0 - Sair \n')
         if input_usuario == '0':
             print('Saindo...')
             break
-        elif input_usuario not in ('1', '2', '3', '4'):
+        elif input_usuario not in ('1', '2', '3', '4', '5'):
             print('Por favor, escolha apenas os números das opções sugeridas.')
         elif input_usuario == '1':
             menu_adicionar()
@@ -22,6 +23,8 @@ def exibir_menu():
             menu_atualizar()
         elif input_usuario == '4':
             menu_deletar()
+        elif input_usuario == '5':
+            menu_resumo()
         
 
 def menu_listar():
@@ -83,11 +86,12 @@ def menu_atualizar():
         if buscar_transacao_por_id(input_id_transacao) is None:
             print('Id não encontrado.')
             return
-        print('Qual campo deseja alterar?')
-        input_campo_transacao = input(('1 - Tipo \n2 - Categoria \n3 - Valor \n4 - Descrição \n5 - Data'))
+        print('Qual campo deseja alterar?\n')
+        input_campo_transacao = input(('1 - Tipo \n2 - Categoria \n3 - Valor \n4 - Descrição \n5 - Data\n'))
         if input_campo_transacao not in ('1', '2', '3', '4', '5'):
             print('Por favor, escolha apenas os números das opções sugeridas.')
         campo_alterado = ''
+        print('=========================================')
         if input_campo_transacao == '1':
             campo_alterado = validar_tipo('Informe o tipo da transação: \n 1 - Receita ou  2 - Despesa \n')
         elif input_campo_transacao == '2':
@@ -104,3 +108,15 @@ def menu_atualizar():
             print('Transação atualizada com sucesso.\n')
         else:
             print('ID não encontrado.')
+
+def menu_resumo():
+    receita, despesa, saldo = resumo_financeiro()
+    print('=========================================')
+    print('           RESUMO FINANCEIRO             ')
+    print('=========================================')
+    print(f'  Total Receitas:  R$ {receita:.2f}')
+    print(f'  Total Despesas:  R$ {despesa:.2f}')
+    print('-----------------------------------------')
+    print(f'  Saldo Atual:     R$ {saldo:.2f}')
+    print('=========================================')
+    

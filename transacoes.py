@@ -65,4 +65,21 @@ def deletar_transacao(id_transacao):
                     return True
     except Error as e:
         print(f'Erro ao acessar o banco: {e}')
-    
+
+def resumo_financeiro():
+    try:
+        with conectar() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute('''
+                               SELECT SUM(valor) FROM transacoes WHERE tipo = %s
+                               ''', ('Receita',))
+                total_receita = cursor.fetchone()[0] or 0
+
+                cursor.execute('''
+                               SELECT SUM(valor) FROM transacoes WHERE tipo = %s
+                               ''', ('Despesa',))
+                total_despesa = cursor.fetchone()[0] or 0
+                saldo = total_receita - total_despesa
+                return total_receita, total_despesa, saldo
+    except Error as e:
+        print(f'Erro ao acessar o banco: {e}')
