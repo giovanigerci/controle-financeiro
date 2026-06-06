@@ -26,4 +26,16 @@ def inicializar_banco():
                 ''')
     conn.commit()
     conn.close()
+
+def com_conexao(func):
+    def wrapper(*args, **kwargs):
+        try:
+            with conectar() as conn:
+                with conn.cursor() as cursor:
+                    resultado = func(cursor, *args, **kwargs)
+                    conn.commit()
+                    return resultado
+        except Error as e:
+            print(f'Erro ao acessar o banco: {e}')
+    return wrapper
     
