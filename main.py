@@ -1,6 +1,12 @@
 from database import inicializar_banco
-from menu import exibir_menu
+from fastapi import FastAPI
+from contextlib import asynccontextmanager
+from routers import transacoes
 
-inicializar_banco()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    inicializar_banco()
+    yield
 
-exibir_menu()
+app = FastAPI(lifespan=lifespan)
+app.include_router(transacoes.router)
