@@ -1,7 +1,7 @@
-from transacoes import (
+from backend.transacoes import (
     adicionar_transacao, listar_transacoes, deletar_transacao, 
     buscar_transacao_por_id, atualizar_transacao, resumo_financeiro)
-from validacoes import validar_data, validar_tipo, validar_valor
+from backend.validacoes import validar_data, validar_tipo, validar_valor
 
 def exibir_menu():
     while True:

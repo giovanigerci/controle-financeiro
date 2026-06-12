@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
-from transacoes import (
+from backend.transacoes import (
     adicionar_transacao, listar_transacoes, deletar_transacao, 
     buscar_transacao_por_id, atualizar_transacao, resumo_financeiro)
-from schemas.transacao import TransacaoSchema, TransacaoUpdateSchema
+from backend.schemas.transacao import TransacaoSchema, TransacaoUpdateSchema
 
 router = APIRouter()
 

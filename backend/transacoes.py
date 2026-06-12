@@ -1,4 +1,4 @@
-from database import com_conexao
+from backend.database import com_conexao
 
 
 @com_conexao

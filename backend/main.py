@@ -1,7 +1,7 @@
-from database import inicializar_banco
+from backend.database import inicializar_banco
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from routers import transacoes
+from backend.routers import transacoes
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
