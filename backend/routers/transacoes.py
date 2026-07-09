@@ -40,6 +40,11 @@ def delete_transacao(id: int):
 
 @router.put('/transacoes/{id}')
 def put_transacao(id: int, transacao: TransacaoUpdateSchema):
-    if atualizar_transacao(id, transacao.campo, transacao.novo_valor):
+    try:
+        atualizado = atualizar_transacao(id, transacao.campo, transacao.novo_valor)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    
+    if atualizado:
         return {'mensagem': 'Transação atualizada com sucesso'}
     raise HTTPException(status_code=404, detail='Transação não encontrada')

@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Literal
 
 class TransacaoSchema(BaseModel):
     tipo: str
@@ -8,6 +8,7 @@ class TransacaoSchema(BaseModel):
     descricao: str
     data: str
 
+CampoAtualizavel = Literal['tipo', 'categoria', 'valor', 'descricao', 'data']
 class TransacaoUpdateSchema(BaseModel):
-    campo: str
+    campo: CampoAtualizavel
     novo_valor: str

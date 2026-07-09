@@ -1,6 +1,9 @@
 from backend.database import com_conexao
 
 
+CAMPOS_ATUALIZAVEIS = {'tipo', 'categoria', 'valor', 'descricao', 'data'}
+
+
 @com_conexao
 def adicionar_transacao(cursor, tipo, categoria, valor, descricao, data):
     cursor.execute('''
@@ -23,6 +26,9 @@ def listar_transacoes(cursor):
 
 @com_conexao
 def atualizar_transacao(cursor, id_transacao, nome_campo, novo_valor):
+    if nome_campo not in CAMPOS_ATUALIZAVEIS:
+        raise ValueError(f'Campo não permitido para atualização: {nome_campo}')
+    
     cursor.execute(f'''
                     UPDATE transacoes SET {nome_campo} = %s WHERE id = %s
                     ''', (novo_valor, id_transacao))
